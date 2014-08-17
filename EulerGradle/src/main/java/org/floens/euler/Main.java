@@ -1,8 +1,17 @@
 package org.floens.euler;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -549,35 +558,199 @@ public class Main {
                 "63 66 04 68 89 53 67 30 73 16 69 87 40 31",
                 "04 62 98 27 23 09 70 98 73 93 38 53 60 04 23" };
 
-        List<List<Integer>> parsed = new ArrayList<>();
+        int[][] parsed = new int[triangle.length][];
 
         for (int i = 0; i < triangle.length; i++) {
             List<Integer> row = new ArrayList<>();
             String[] splitted = triangle[i].split(" ");
 
-            for (int j = 0; j < splitted.length; j++) {
-                row.add(Integer.parseInt(splitted[j]));
-            }
+            parsed[i] = new int[splitted.length];
 
-            parsed.add(row);
+            for (int j = 0; j < splitted.length; j++) {
+                parsed[i][j] = Integer.parseInt(splitted[j]);
+            }
         }
 
-        int total = parsed.get(0).get(0);
-        int index = 0, a, b;
-        for (int i = 1; i < parsed.size(); i++) {
-            a = parsed.get(i).get(index);
-            b = parsed.get(i).get(index + 1);
-            total += a > b ? a : b;
-            if (b > a) {
-                index++;
+        int a, b, c;
+        for (int i = parsed.length - 2; i >= 0; i--) {
+            for (int j = 0; j < parsed[i].length; j++) {
+                c = parsed[i][j];
+                a = parsed[i + 1][j];
+                b = parsed[i + 1][j + 1];
+                parsed[i][j] = a > b ? c + a : c + b;
             }
-            log(a > b ? a : b);
+        }
+
+        log(parsed[0][0]);
+    }
+
+    private void problem19() {
+        int year = 1900;
+        int month = 0;
+        int day = 0;
+        int sundays = 0;
+
+        while (true) {
+            if (year >= 1901 && day % 7 == 6) {
+                sundays++;
+            }
+
+            if (month == 1 && year % 1000 != 0 && year % 400 == 0) {
+                if (year % 1000 == 0) {
+                    if (year % 400 == 0) {
+                        day += 29;
+                    } else {
+                        day += 28;
+                    }
+                } else {
+                    if (year % 4 == 0) {
+                        day += 29;
+                    } else {
+                        day += 28;
+                    }
+                }
+            } else if (month == 8 || month == 3 || month == 5 || month == 10) {
+                day += 30;
+            } else {
+                day += 31;
+            }
+
+            month++;
+
+            if (month == 12) {
+                year++;
+                month = 0;
+            }
+
+            if (year == 2001) {
+                break;
+            }
+        }
+
+        log(sundays);
+    }
+
+    private void problem20() {
+        BigInteger total = new BigInteger("100");
+
+        for (int i = 99; i >= 1; i--) {
+            total = total.multiply(new BigInteger(i + ""));
+        }
+
+        String totalString = total.toString();
+        long sum = 0;
+        for (int i = 0; i < totalString.length(); i++) {
+            sum += Integer.parseInt(String.valueOf(totalString.charAt(i)));
+        }
+
+        log(sum);
+    }
+    
+    private long getProperDivisorsSum(long n) {
+        long sum = 1;
+        
+        for (long i = 2; i < n / 2 + 1; i++) {
+            if (n % i == 0) {
+                sum += i;
+            }
+        }
+        return sum;
+    }
+    
+    private void problem21() {
+        int amicableSum = 0;
+        long a, b;
+        for (int i = 1; i < 10000; i++) {
+            a = getProperDivisorsSum(i);
+            if (a != i) {
+                b = getProperDivisorsSum(a);
+                if (i == b) {
+                    amicableSum += a;
+                }
+            }
+        }
+
+        log(amicableSum);
+    }
+
+    private String readFile(String path) {
+        try {
+            File file = new File(path);
+            InputStreamReader is = new InputStreamReader(new FileInputStream(file), "UTF-8");
+            StringWriter sw = new StringWriter();
+
+            char[] buffer = new char[4096];
+            int read;
+            while ((read = is.read(buffer)) != -1) {
+                sw.write(buffer, 0, read);
+            }
+
+            is.close();
+            sw.close();
+
+            return sw.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void problem22() {
+        String file = readFile("res/p022_names.txt");
+
+        String[] names = file.split(",");
+        for (int i = 0; i < names.length; i++) {
+            names[i] = names[i].replace("\"", "");
+        }
+
+        Collections.sort(Arrays.asList(names));
+
+        long total = 0;
+        String name;
+        int c, j;
+        for (int i = 0; i < names.length; i++) {
+            name = names[i];
+            c = 0;
+            for (j = 0; j < name.length(); j++) {
+                c += name.charAt(j) - 'A' + 1;
+            }
+
+            total += c * (i + 1);
         }
 
         log(total);
     }
 
+    private void problem23() {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i < 28123; i++) {
+            if (getProperDivisorsSum(i) > i) {
+                list.add(i);
+            }
+        }
+
+        logList(list);
+
+        Set<Integer> sums = new HashSet<>();
+        for (int x = 0; x < list.size(); x++) {
+            for (int y = 0; y < list.size(); y++) {
+                sums.add(list.get(x) + list.get(y));
+            }
+        }
+
+        long total = 0;
+        boolean flag;
+        for (int i = 0; i <= 28123; i++) {
+            flag = false;
+            if (!sums.contains(i)) {
+                total += i;
+            }
+        }
+
+        log("total " + total);
+    }
+    
     private void start() {
-        problem18();
+        problem23();
     }
 }

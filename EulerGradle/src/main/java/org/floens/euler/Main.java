@@ -14,24 +14,16 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.floens.euler.math.PrimeFinder;
 
 @SuppressWarnings("unused")
 public class Main {
     public static void main(String[] args) {
-        Main main = new Main();
-        main.start();
+        new Main().start();
     }
 
-    private void log(int text) {
-        log(Integer.toString(text));
-    }
-
-    private void log(long text) {
-        log(Long.toString(text));
-    }
-
-    private void log(String text) {
-        System.out.println(text);
+    private void log(Object obj) {
+        System.out.println(obj.toString());
     }
 
     private void logList(List<?> list) {
@@ -104,11 +96,9 @@ public class Main {
 
     private boolean isPrime(long n) {
         if (n % 2 == 0)
-            return n == 2;
-        if (n % 3 == 0)
-            return n == 3;
+            return false;
 
-        for (long i = 2; i * i <= n; i++) {
+        for (long i = 3; i * i <= n; i += 2) {
             if (n % i == 0)
                 return false;
         }
@@ -645,10 +635,10 @@ public class Main {
 
         log(sum);
     }
-    
+
     private long getProperDivisorsSum(long n) {
         long sum = 1;
-        
+
         for (long i = 2; i < n / 2 + 1; i++) {
             if (n % i == 0) {
                 sum += i;
@@ -656,7 +646,7 @@ public class Main {
         }
         return sum;
     }
-    
+
     private void problem21() {
         int amicableSum = 0;
         long a, b;
@@ -749,8 +739,62 @@ public class Main {
 
         log("total " + total);
     }
-    
+
+    private void problem27() {
+        PrimeFinder primes = new PrimeFinder(100000);
+        primes.calculate();
+
+        int tmp = 0;
+        int n = 0;
+
+        int a = 0;
+        int b = 0;
+
+        int maxPrime = 0;
+
+        final int range = 1000;
+        for (a = -range + 1; a < range; a++) {
+            for (b = -range + 1; b < range; b++) {
+                for (n = 0;; n++) {
+                    tmp = (n * n) + (a * n) + b;
+                    if (tmp < 0)
+                        break;
+
+                    if (primes.get(tmp)) {
+                        if (n >= maxPrime) {
+                            maxPrime = n;
+                            log("Found new max prime a(" + a + ") b(" + b + ") n(" + (n + 1) + ") product(" + (a * b) + ")");
+                        }
+                        n++;
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void problem28() {
+        int sum = 1;
+        int total = 1;
+        int rad = 2;
+
+        for (int j = 0; j < (1001 / 2); j++) {
+            for (int i = 0; i < 4; i++) {
+                total += rad;
+                sum += total;
+            }
+            rad += 2;
+        }
+
+        log(sum);
+    }
+
+    private void problem29() {
+
+    }
+
     private void start() {
-        problem23();
+        problem29();
     }
 }

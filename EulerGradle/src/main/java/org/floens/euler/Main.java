@@ -30,6 +30,10 @@ public class Main {
         log(StringUtils.join(list, ","));
     }
 
+    private void logArray(Object[] arr) {
+        log(Arrays.toString(arr));
+    }
+
     private void problem6() {
         List<Long> list = new ArrayList<>();
 
@@ -791,10 +795,61 @@ public class Main {
     }
 
     private void problem29() {
+        final int aMax = 100;
+        final int bMax = 100;
 
+        List<BigInteger> nums = new ArrayList<>();
+
+        BigInteger num;
+        int a, b;
+        for (a = 2; a <= aMax; a++) {
+            for (b = 2; b <= bMax; b++) {
+                num = BigInteger.valueOf(a);
+                num = num.pow(b);
+                if (!nums.contains(num)) {
+                    nums.add(num);
+                }
+            }
+        }
+
+        log(nums.size());
+    }
+
+    private int intPow(int a, int b) {
+        return (int) Math.pow(a, b);
+    }
+
+    private long longPow(long a, long b) {
+        return (long) Math.pow(a, b);
+    }
+
+    private void problem30() {
+        final int size = 7;
+        final int power = 5;
+
+        long totalSum = 0;
+        int inc, i;
+        long total;
+        long[] digits = new long[size];
+        for (long j = 2; j < intPow(10, size); j++) {
+            for (i = 0; i < size; i++) {
+                digits[size - i - 1] = (j / intPow(10, i)) % 10;
+            }
+
+            total = 0;
+            for (i = 0; i < size; i++) {
+                total += longPow(digits[i], power);
+            }
+
+            if (total == j) {
+                log("Winner! " + j);
+                totalSum += j;
+            }
+        }
+        log("Total sum: " + totalSum);
     }
 
     private void start() {
-        problem29();
+        problem30();
     }
 }

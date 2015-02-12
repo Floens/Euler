@@ -827,11 +827,13 @@ public class Main {
         final int size = 7;
         final int power = 5;
 
+        final int max = intPow(9, power) * size;
+
         long totalSum = 0;
         int inc, i;
         long total;
         long[] digits = new long[size];
-        for (long j = 2; j < intPow(10, size); j++) {
+        for (long j = 2; j < max; j++) {
             for (i = 0; i < size; i++) {
                 digits[size - i - 1] = (j / intPow(10, i)) % 10;
             }

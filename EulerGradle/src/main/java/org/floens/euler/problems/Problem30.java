@@ -3,7 +3,7 @@ package org.floens.euler.problems;
 import org.floens.euler.Problem;
 import org.floens.euler.math.MathUtils;
 
-public class Problem29 extends Problem {
+public class Problem30 extends Problem {
     @Override
     public String solve() {
         final int size = 7;

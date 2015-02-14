@@ -15,12 +15,22 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.floens.euler.math.PrimeFinder;
-import org.floens.euler.problems.Problem29;
+import org.floens.euler.problems.Problem30;
 
 @SuppressWarnings("unused")
 public class Main {
     public static void main(String[] args) {
         new Main().solve();
+    }
+
+    private void solve() {
+        Problem problem = new Problem30();
+        long startTime = System.currentTimeMillis();
+        String result = problem.solve();
+        long endTime = System.currentTimeMillis();
+
+        log(result);
+        log("Took " + (endTime - startTime) + "ms");
     }
 
     private void log(Object obj) {
@@ -814,51 +824,5 @@ public class Main {
         }
 
         log(nums.size());
-    }
-
-    private int intPow(int a, int b) {
-        return (int) Math.pow(a, b);
-    }
-
-    private long longPow(long a, long b) {
-        return (long) Math.pow(a, b);
-    }
-
-    private void problem30() {
-        final int size = 7;
-        final int power = 5;
-
-        final int max = intPow(9, power) * size;
-
-        long totalSum = 0;
-        int inc, i;
-        long total;
-        long[] digits = new long[size];
-        for (long j = 2; j < max; j++) {
-            for (i = 0; i < size; i++) {
-                digits[size - i - 1] = (j / intPow(10, i)) % 10;
-            }
-
-            total = 0;
-            for (i = 0; i < size; i++) {
-                total += longPow(digits[i], power);
-            }
-
-            if (total == j) {
-                log("Winner! " + j);
-                totalSum += j;
-            }
-        }
-        log("Total sum: " + totalSum);
-    }
-
-    private void solve() {
-        Problem problem = new Problem29();
-        long startTime = System.currentTimeMillis();
-        String result = problem.solve();
-        long endTime = System.currentTimeMillis();
-
-        log(result);
-        log("Took " + (endTime - startTime) + "ms");
     }
 }

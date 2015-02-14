@@ -15,11 +15,12 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.floens.euler.math.PrimeFinder;
+import org.floens.euler.problems.Problem29;
 
 @SuppressWarnings("unused")
 public class Main {
     public static void main(String[] args) {
-        new Main().start();
+        new Main().solve();
     }
 
     private void log(Object obj) {
@@ -851,7 +852,13 @@ public class Main {
         log("Total sum: " + totalSum);
     }
 
-    private void start() {
-        problem30();
+    private void solve() {
+        Problem problem = new Problem29();
+        long startTime = System.currentTimeMillis();
+        String result = problem.solve();
+        long endTime = System.currentTimeMillis();
+
+        log(result);
+        log("Took " + (endTime - startTime) + "ms");
     }
 }

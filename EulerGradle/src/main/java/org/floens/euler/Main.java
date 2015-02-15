@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.floens.euler.math.PrimeFinder;
-import org.floens.euler.problems.Problem33;
+import org.floens.euler.problems.Problem34;
 
 @SuppressWarnings("unused")
 public class Main {
@@ -28,7 +28,7 @@ public class Main {
     }
 
     private void solve() {
-        Problem problem = new Problem33();
+        Problem problem = new Problem34();
         long startTime = System.currentTimeMillis();
         String result = problem.solve();
         long endTime = System.currentTimeMillis();

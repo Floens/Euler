@@ -9,7 +9,7 @@ public class Problem30 extends Problem {
         final int size = 7;
         final int power = 5;
 
-        final int max = MathUtils.pow(9, power) * size;
+        final int max = MathUtils.longPow(9, power) * size;
 
         long totalSum = 0;
         int inc, i;
@@ -17,12 +17,12 @@ public class Problem30 extends Problem {
         long[] digits = new long[size];
         for (long j = 2; j < max; j++) {
             for (i = 0; i < size; i++) {
-                digits[size - i - 1] = (j / MathUtils.pow(10, i)) % 10;
+                digits[size - i - 1] = (j / MathUtils.longPow(10, i)) % 10;
             }
 
             total = 0;
             for (i = 0; i < size; i++) {
-                total += MathUtils.pow(digits[i], power);
+                total += MathUtils.longPow(digits[i], power);
             }
 
             if (total == j) {

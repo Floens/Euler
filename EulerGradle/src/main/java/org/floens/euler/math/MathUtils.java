@@ -1,7 +1,7 @@
 package org.floens.euler.math;
 
 public class MathUtils {
-    public static int pow(long base, long exp) {
+    public static int longPow(long base, long exp) {
         if (exp < 0) {
             throw new IllegalArgumentException("Exp <= 0");
         }

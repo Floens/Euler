@@ -14,23 +14,27 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.floens.euler.math.PrimeFinder;
-import org.floens.euler.problems.Problem31;
+import org.floens.euler.problems.Problem32;
 
 @SuppressWarnings("unused")
 public class Main {
+    private static final Logger log = LogManager.getLogger("Main");
+
     public static void main(String[] args) {
         new Main().solve();
     }
 
     private void solve() {
-        Problem problem = new Problem31();
+        Problem problem = new Problem32();
         long startTime = System.currentTimeMillis();
         String result = problem.solve();
         long endTime = System.currentTimeMillis();
 
-        log(result);
-        log("Took " + (endTime - startTime) + "ms");
+        log.info(result);
+        log.info("Took " + (endTime - startTime) + "ms");
     }
 
     private void log(Object obj) {

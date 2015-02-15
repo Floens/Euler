@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.floens.euler.math.PrimeFinder;
-import org.floens.euler.problems.Problem32;
+import org.floens.euler.problems.Problem33;
 
 @SuppressWarnings("unused")
 public class Main {
@@ -28,12 +28,14 @@ public class Main {
     }
 
     private void solve() {
-        Problem problem = new Problem32();
+        Problem problem = new Problem33();
         long startTime = System.currentTimeMillis();
         String result = problem.solve();
         long endTime = System.currentTimeMillis();
 
-        log.info(result);
+        if (result != null) {
+            log.info("Answer: " + result);
+        }
         log.info("Took " + (endTime - startTime) + "ms");
     }
 
